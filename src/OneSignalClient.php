@@ -3,6 +3,7 @@
 namespace Berkayk\OneSignal;
 
 use GuzzleHttp\Client;
+use Psr\Http\Message\ResponseInterface;
 
 class OneSignalClient
 {
@@ -347,7 +348,7 @@ class OneSignalClient
             $promise = $this->client->postAsync(self::API_URL . $endPoint, $this->headers);
             return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
         }
-        return $this->client->post(self::API_URL . $endPoint, $this->headers);
+        return $this->formatResponse($this->client->post(self::API_URL . $endPoint, $this->headers));
     }
 
     public function put($endPoint) {
@@ -355,10 +356,24 @@ class OneSignalClient
             $promise = $this->client->putAsync(self::API_URL . $endPoint, $this->headers);
             return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
         }
-        return $this->client->put(self::API_URL . $endPoint, $this->headers);
+        return $this->formatResponse($this->client->put(self::API_URL . $endPoint, $this->headers));
     }
 
     public function get($endPoint) {
-        return $this->client->get(self::API_URL . $endPoint, $this->headers);
+        return $this->formatResponse($this->client->get(self::API_URL . $endPoint, $this->headers));
+    }
+
+    /**
+     * Transform the ResponseInterface in a more user-friendly array.
+     *
+     * @param ResponseInterface $response
+     * @return array
+     */
+    private function formatResponse(ResponseInterface $response)
+    {
+        return [
+            'status' => $response->getStatusCode(),
+            'data' => json_decode($response->getBody()->getContents(), true)
+        ];
     }
 }
