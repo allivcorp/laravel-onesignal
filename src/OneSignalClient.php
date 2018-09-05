@@ -289,6 +289,16 @@ class OneSignalClient
         return $this->post(self::ENDPOINT_NOTIFICATIONS);
     }
 
+    public function cancelNotification($notificationId, $appId = null) {
+        $this->requiresAuth();
+
+        if (!$appId) {
+            $appId = $this->appId;
+        }
+
+        return $this->delete(self::ENDPOINT_NOTIFICATIONS . '/' . $notificationId . '?app_id=' . $appId);
+    }
+
     public function getNotification($notification_id, $app_id = null) {
         $this->requiresAuth();
         $this->usesJSON();
