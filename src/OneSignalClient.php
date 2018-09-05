@@ -359,6 +359,14 @@ class OneSignalClient
         return $this->formatResponse($this->client->put(self::API_URL . $endPoint, $this->headers));
     }
 
+    public function delete($endPoint) {
+        if($this->requestAsync === true) {
+            $promise = $this->client->deleteAsync(self::API_URL . $endPoint, $this->headers);
+            return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
+        }
+        return $this->formatResponse($this->client->delete(self::API_URL . $endPoint, $this->headers));
+    }
+
     public function get($endPoint) {
         return $this->formatResponse($this->client->get(self::API_URL . $endPoint, $this->headers));
     }
