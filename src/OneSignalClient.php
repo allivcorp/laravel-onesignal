@@ -128,7 +128,7 @@ class OneSignalClient
             );
         }
 
-        $this->sendNotificationCustom($params);
+        return $this->sendNotificationCustom($params);
     }
 
     public function sendNotificationUsingTags($message, $tags, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
@@ -170,7 +170,7 @@ class OneSignalClient
             );
         }
 
-        $this->sendNotificationCustom($params);
+        return $this->sendNotificationCustom($params);
     }
 
     public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
@@ -212,7 +212,7 @@ class OneSignalClient
             );
         }
 
-        $this->sendNotificationCustom($params);
+        return $this->sendNotificationCustom($params);
     }
 
     public function sendNotificationToSegment($message, $segment, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
@@ -254,7 +254,7 @@ class OneSignalClient
             );
         }
 
-        $this->sendNotificationCustom($params);
+        return $this->sendNotificationCustom($params);
     }
 
     /**
